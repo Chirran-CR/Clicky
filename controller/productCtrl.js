@@ -62,9 +62,9 @@ const getAllProduct = asyncHandler(async (req, res) => {
     excludeFields.forEach((el) => delete queryObj[el]);
     let queryStr = JSON.stringify(queryObj);
     queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
-
-    let query = Product.find(JSON.parse(queryStr));
-
+    // console.log("QueryStr is:",queryStr);
+    let query =  Product.find(JSON.parse(queryStr));
+    // console.log("query is:",query);
     // Sorting
 
     if (req.query.sort) {
@@ -94,6 +94,7 @@ const getAllProduct = asyncHandler(async (req, res) => {
       if (skip >= productCount) throw new Error("This Page does not exists");
     }
     const product = await query;
+    // console.log("product is:",product);
     res.json(product);
   } catch (error) {
     throw new Error(error);
